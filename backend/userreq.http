@@ -3,9 +3,9 @@ POST http://localhost:4000/user-api/users
 Content-Type: application/json
 
 {
-  "firstName": "Anurag",
+  "firstName": "Shreyas",
   "lastName": "Sharma",
-  "email": "anurag.user@example.com",
+  "email": "shreyas.user@example.com",
   "password": "User@12345",
   "profileImageUrl": "https://example.com/avatars/user.png"
 }
