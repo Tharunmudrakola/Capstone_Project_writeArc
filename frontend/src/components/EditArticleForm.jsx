@@ -21,6 +21,7 @@ function EditArticle() {
   const { id } = useParams();
 
   const article = location.state;
+  const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
   const {
     register,
@@ -41,7 +42,7 @@ function EditArticle() {
   const updateArticle = async (data) => {
     console.log(data);
     data.articleId = article._id;
-    let res = await axios.put("http://localhost:4000/author-api/articles", data, { withCredentials: true });
+    let res = await axios.put(`${BASE_URL}/author-api/articles`, data, { withCredentials: true });
     console.log("res update atricle", res);
     navigate(`/article/${article._id}`, {
       state: res.data.payload,

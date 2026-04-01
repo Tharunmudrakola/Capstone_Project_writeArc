@@ -20,7 +20,8 @@ function UserProfile() {
   const currentUser = useAuth((state) => state.currentUser);
   const navigate = useNavigate();
   //console.log("currentUser in profile",currentUser)
-
+  const BASE_URL = import.meta.env.VITE_BACKEND_URL;
+  
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [articles, setArticles] = useState([]);
@@ -29,7 +30,7 @@ function UserProfile() {
     const getArticles = async () => {
       setLoading(true);
       try {
-        const res = await axios.get("http://localhost:4000/user-api/articles", { withCredentials: true });
+        const res = await axios.get(`${BASE_URL}/user-api/articles`, { withCredentials: true });
 
         setArticles(res.data.payload);
       } catch (err) {
