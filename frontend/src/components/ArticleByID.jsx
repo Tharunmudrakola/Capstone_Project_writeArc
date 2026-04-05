@@ -109,7 +109,7 @@ function ArticleByID() {
         <h1 className={`${articleMainTitle} uppercase`}>{article.title}</h1>
 
         <div className={articleAuthorRow}>
-          <div className={authorInfo}>✍️ {article.author?.firstName || "Author"}</div>
+          <div className={authorInfo}>✍️ {article?.firstName || "Author"}</div>
 
           <div>{formatDate(article.createdAt)}</div>
         </div>
