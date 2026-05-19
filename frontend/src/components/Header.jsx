@@ -81,11 +81,11 @@ function Header() {
                 </NavLink>
               </li>
 
-              <li>
+              {/* <li>
                 <button className={navLinkClass} onClick={handleLogout}>
                   Logout
                 </button>
-              </li>
+              </li> */}
             </>
           )}
         </ul>

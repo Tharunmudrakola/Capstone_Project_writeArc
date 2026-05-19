@@ -51,27 +51,26 @@ userRoute.get("/articles", verifyToken("USER"), async (req, res) => {
 });
 
 //Add comment to an article(protected route)
-userRoute.put("/articles", verifyToken("USER"), async (req, res) => {
-  //get comment obj from req
-  const { user, articleId, comment } = req.body;
-  //check user(req.user)
-  console.log(req.user);
-  if (user !== req.user.userId) {
-    return res.status(403).json({ message: "Forbidden" });
-  }
-  //find artcleby id and update
-  let articleWithComment = await ArticleModel.findOneAndUpdate(
-    { _id: articleId, isArticleActive: true },
-    { $push: { comments: { user, comment } } },
-    { new: true, runValidators: true },
-  ).populate("comments.user","email firstName");
+userRoute.put("/articles/:articleId/comment", verifyToken("USER"), async (req, res) => {
+  const { articleId } = req.params;
+  const { comment } = req.body;
 
-  //if article not found
+  const userId = req.user.userId; //from token
+
+  const articleWithComment = await ArticleModel.findOneAndUpdate(
+    { _id: articleId, isArticleActive: true },
+    { $push: { comments: { user: userId, comment } } },
+    { new: true, runValidators: true }
+  ).populate("comments.user", "email firstName");
+
   if (!articleWithComment) {
     return res.status(404).json({ message: "Article not found" });
   }
-  //send res
-  res.status(200).json({ message: "comment added successfully", payload: articleWithComment });
+
+  res.status(200).json({
+  message: "comment added successfully",
+  payload: articleWithComment, // return FULL article
+});
 });
 
 //next() ---> next middleware

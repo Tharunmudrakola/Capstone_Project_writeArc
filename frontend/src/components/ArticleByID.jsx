@@ -17,7 +17,10 @@ import {
   deleteBtn,
   loadingClass,
   errorClass,
+  divider,
+  formTitle
 } from "../styles/common.js";
+import AddComment from "./AddComment.jsx";
 
 
 function ArticleByID() {
@@ -25,6 +28,7 @@ function ArticleByID() {
   const location = useLocation();
   const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_BACKEND_URL;
+  
 
   const user = useAuth((state) => state.currentUser);
 
@@ -40,7 +44,6 @@ function ArticleByID() {
 
       try {
         const res = await axios.get(`${BASE_URL}/user-api/article/${id}`, { withCredentials: true });
-
         setArticle(res.data.payload);
       } catch (err) {
         setError(err.response?.data?.error);
@@ -60,7 +63,6 @@ function ArticleByID() {
     });
   };
 
-  // delete & restore article
   const toggleArticleStatus = async () => {
     const newStatus = !article.isArticleActive;
 
@@ -74,18 +76,13 @@ function ArticleByID() {
         { withCredentials: true },
       );
 
-      console.log("SUCCESS:", res.data);
-
       setArticle(res.data.payload);
-
       toast.success(res.data.message);
     } catch (err) {
-      console.log("ERROR:", err.response);
-
       const msg = err.response?.data?.message;
 
       if (err.response?.status === 400) {
-        toast(msg); // already deleted/active case
+        toast(msg);
       } else {
         setError(msg || "Operation failed");
       }
@@ -102,25 +99,19 @@ function ArticleByID() {
 
   return (
     <div className={articlePageWrapper}>
-      {/* Header */}
       <div className={articleHeader}>
         <span className={articleCategory}>{article.category}</span>
 
         <h1 className={`${articleMainTitle} uppercase`}>{article.title}</h1>
 
         <div className={articleAuthorRow}>
-          <div className={authorInfo}>✍️ {article?.firstName || "Author"}</div>
-
+          <div className={authorInfo}>✍️ {article.author?.firstName || "Author"}</div>
           <div>{formatDate(article.createdAt)}</div>
         </div>
       </div>
 
-      {/* Content */}
       <div className={articleContent}>{article.content}</div>
 
-
-
-      {/* AUTHOR actions */}
       {user?.role === "AUTHOR" && (
         <div className={articleActions}>
           <button className={editBtn} onClick={() => editArticle(article)}>
@@ -132,10 +123,37 @@ function ArticleByID() {
           </button>
         </div>
       )}
-      {/* form to add comment if role is USER */}
-      
 
-      {/* Footer */}
+      <div className="mt-6">
+        <h3 className="text-xl mb-2">Comments</h3>
+
+        <AddComment
+          articleId={article._id}
+          onCommentAdded={(updatedArticleOrComments) =>
+            setArticle((prev) => ({
+              ...prev,
+              ...(updatedArticleOrComments &&
+              !Array.isArray(updatedArticleOrComments)
+                ? updatedArticleOrComments
+                : {}),
+              comments: Array.isArray(updatedArticleOrComments)
+                ? updatedArticleOrComments
+                : Array.isArray(updatedArticleOrComments?.comments)
+                ? updatedArticleOrComments.comments
+                : [],
+            }))
+          }
+        />
+
+        {Array.isArray(article.comments) &&
+          article.comments.map((c, i) => (
+            <div key={i} className={divider}>
+              <p className="font-semibold">{c.user?.firstName || "User"}</p>
+              <p>{c.comment}</p>
+            </div>
+          ))}
+      </div>
+
       <div className={articleFooter}>Last updated: {formatDate(article.updatedAt)}</div>
     </div>
   );

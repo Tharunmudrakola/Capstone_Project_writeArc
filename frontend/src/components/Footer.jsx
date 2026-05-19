@@ -1,8 +1,8 @@
-import React from 'react'
+import {divider} from "../styles/common.js"
 
 function Footer() {
   return (
-    <div>Footer</div>
+    <div className={divider}></div>
   )
 }
 

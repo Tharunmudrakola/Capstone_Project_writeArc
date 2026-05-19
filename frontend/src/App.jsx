@@ -13,6 +13,7 @@ import EditArticle from "./components/EditArticleForm";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Unauthorized from "./components/Unauthorized";
 import ErrorBoundary from "./components/ErrorBoundary";
+import ChangePassword from "./components/ChangePassword";
 
 function App() {
   const routerObj = createBrowserRouter([
@@ -35,11 +36,33 @@ function App() {
           element: <Login />,
         },
         {
+          path: "change-password",
+          element: (
+            <ProtectedRoute allowedRoles={["USER","AUTHOR"]}>
+              <ChangePassword />
+            </ProtectedRoute>
+          ),
+        },
+
+        // {
+        //   path: "forgot-password",
+        //   element: <ForgotPassword />,
+        // },
+        {
           path: "user-profile",
           element: 
           <ProtectedRoute allowedRoles={["USER"]}>
             <UserProfile />
           </ProtectedRoute>,
+          
+          // children: [
+          //   {
+              
+          //     path:"change-password",
+          //     element: <ChangePassword/>
+            
+          //   }
+          // ]
         },
         {
           path: "author-profile",
@@ -61,6 +84,10 @@ function App() {
               path: "write-article",
               element: <WriteArticle />,
             },
+            {
+              path:"change-password",
+              element: <ChangePassword/>
+            }
           ],
         },
         {

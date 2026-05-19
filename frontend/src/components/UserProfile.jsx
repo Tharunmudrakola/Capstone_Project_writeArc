@@ -15,6 +15,7 @@ import {
   timestampClass,
 } from "../styles/common.js";
 
+
 function UserProfile() {
   const logout = useAuth((state) => state.logout);
   const currentUser = useAuth((state) => state.currentUser);
@@ -69,38 +70,65 @@ function UserProfile() {
   }
 
   return (
-    <div>
-      {error && <p className={errorClass}>{error}</p>}
+  <div>
+    {error && <p className={errorClass}>{error}</p>}
 
-      <div className="text-end">
-        <p className="text-2xl"> Welcome, {currentUser?.firstName}</p>
-        <img src={currentUser?.profileImageUrl} className="w-14 mr-2 rounded-full block ms-auto" alt="" />
+    {/* Header section */}
+    <div className="flex justify-end items-center gap-4 mb-6">
+      <div className="text-right">
+        <p className="text-2xl">Welcome, {currentUser?.firstName}</p>
+
+        <div className="flex justify-end gap-3 mt-2">
+          <button
+            className={ghostBtn}
+            onClick={() => navigate("/change-password")}
+          >
+            Change Password
+          </button>
+
+          <button
+            className={ghostBtn}
+            onClick={onLogout}
+          >
+            Logout
+          </button>
+        </div>
       </div>
-      
 
-      <div className={articleGrid}>
-        {articles.map((articleObj) => (
-          <div className={articleCardClass} key={articleObj._id}>
-            <div className="flex flex-col h-full">
-              {/* Top Content */}
-              <div>
-                <p className={articleTitle}>{articleObj.title}</p>
-
-                <p>{articleObj.content.slice(0, 20)}...</p>
-
-                <p className={timestampClass}>{formatDateIST(articleObj.createdAt)}</p>
-              </div>
-
-              {/* Button at bottom */}
-              <button className={`${ghostBtn} mt-auto pt-4`} onClick={() => navigateToArticleByID(articleObj)}>
-                Read Article →
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
+      <img
+        src={currentUser?.profileImageUrl}
+        className="w-14 h-14 rounded-full object-cover"
+        alt="profile"
+      />
     </div>
-  );
+
+    {/* Articles grid */}
+    <div className={articleGrid}>
+      {articles.map((articleObj) => (
+        <div className={articleCardClass} key={articleObj._id}>
+          <div className="flex flex-col h-full">
+            <div>
+              <p className={articleTitle}>{articleObj.title}</p>
+
+              <p>{articleObj.content.slice(0, 20)}...</p>
+
+              <p className={timestampClass}>
+                {formatDateIST(articleObj.createdAt)}
+              </p>
+            </div>
+
+            <button
+              className={`${ghostBtn} mt-auto pt-4`}
+              onClick={() => navigateToArticleByID(articleObj)}
+            >
+              Read Article →
+            </button>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+);
 }
 
 export default UserProfile;
