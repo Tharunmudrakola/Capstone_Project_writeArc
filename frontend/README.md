@@ -1,41 +1,43 @@
-
 # BlogApp WriteArc — Frontend
 
-This is the **frontend** of the *BlogApp WriteArc* — a blogging platform built with **React**. It connects with the backend API to enable users, authors, and admins to interact with blog posts and comments.
+This is the **frontend** of the *BlogApp WriteArc* blogging platform built with **React + Vite**.  
+It connects to the backend APIs to allow **Users** and **Authors** to interact with articles and comments.
 
 ---
 
 ## 📌 Table of Contents
 
-1. [About](#about)  
-2. [Tech Stack](#tech-stack)  
-3. [Folder Structure](#folder-structure)  
-4. [Installation](#installation)  
-5. [Available Scripts](#available-scripts)  
-6. [Environment Variables](#environment-variables)  
-7. [Features](#features)  
-8. [Component Overview](#component-overview)  
-9. [API Interaction](#api-interaction)  
-10. [Contributing](#contributing)  
-11. [License](#license)
+1. About  
+2. Tech Stack  
+3. Folder Structure  
+4. Installation  
+5. Available Scripts  
+6. Environment Variables  
+7. Features  
+8. Component Overview  
+9. API Interaction  
+10. Toast Notifications  
+11. Contributing  
+12. License  
 
 ---
 
 ## 🧠 About
 
-This React app serves as the **user interface** for the blogging platform.  
-Users can register, login, view articles, comment, while authors can create/edit their posts.
+This React app serves as the **user interface** for the blogging platform.
+
+- Users can register, login, read articles, and comment.
+- Authors can create, edit, and manage their own articles.
 
 ---
 
 ## 🛠️ Tech Stack
 
-- React (JSX + Functional components)  
-- Vite for fast development & build  
-- React Router for client-side routing  
-- Zustand as store  
-- Tailwind CSS for styling
-- Axios for HTTP calls
+- React (Vite)
+- React Router
+- Zustand (state management)
+- Tailwind CSS (styling)
+- Axios (API calls)
 
 ---
 
@@ -45,8 +47,6 @@ Users can register, login, view articles, comment, while authors can create/edit
 
 frontend
 ├── public/
-│   ├── index.html
-│   └── vite.svg
 ├── src/
 │   ├── assets/
 │   ├── components/
@@ -55,199 +55,175 @@ frontend
 │   ├── App.jsx
 │   ├── main.jsx
 │   └── index.css
-├── .gitignore
-├── eslint.config.js
 ├── package.json
-├── package-lock.json
-├── README.md
-├── vercel.json
-└── vite.config.js
+├── vite.config.js
+└── vercel.json
 
 ````
-:contentReference[oaicite:0]{index=0}
 
 ---
 
 ## 🚀 Installation
 
-1. Navigate to the frontend folder:
-
 ```bash
 cd blogapp-WriteArc/frontend
-````
-
-2. Install dependencies:
-
-```bash
 npm install
-```
+````
 
 ---
 
 ## ▶️ Available Scripts
 
-In the frontend directory, you can run:
-
-### Start development server
+Start development server:
 
 ```bash
 npm run dev
 ```
 
-* Runs the React app in development mode with live reload.
-
-### Create production build
+Build for production:
 
 ```bash
 npm run build
 ```
 
-* Bundles and optimizes the app for deployment.
-
-### Preview production build
+Preview production build:
 
 ```bash
 npm run preview
 ```
 
-* Locally preview the production build.
-
-*Note: These commands are provided by **Vite**.*
-
 ---
 
 ## 🔐 Environment Variables
 
-Create a `.env` file in `frontend/` (optional, if you use environment variables):
+Create a `.env` file in `frontend/`:
 
 ```
 VITE_API_BASE_URL=http://localhost:5000
 ```
 
-* `VITE_API_BASE_URL`: Backend base URL for API calls.
-
 ---
 
 ## ✨ Features
 
-* Responsive UI built with Tailwind CSS
-* API communication using Axios
+* Responsive UI using Tailwind CSS
 * Role-based pages for User and Author
-* Authentication with httpOnly cookie session
-* Dynamic article and comment rendering
-* Navigation between pages
-
----
-
-🔗 API Interaction
-
-All API calls are handled using Axios.
-
-Example pattern used in the project:
-
-axios.get(`${import.meta.env.VITE_API_BASE_URL}/user/articles`, {
-  withCredentials: true,
-});
-withCredentials: true is required because authentication uses httpOnly cookies.
-
-🎨 Styling
-
-The entire UI is styled using Tailwind CSS utility classes, making the design responsive and clean without writing custom CSS for most components.
+* Authentication using httpOnly cookies
+* Dynamic article grid layout
+* Comment system
+* Toast notifications for actions
 
 ---
 
 ## 🧩 Component Overview
 
-Below is a *general overview* of how the components are likely organized based on the folder structure:
-
 ```
 src/
-├── assets/          ← Images, icons, static media
-├── components/      ← All reusable UI components
-│   ├── Navbar.jsx   ← Top navigation bar
-│   ├── Footer.jsx   ← App footer
-│   ├── ArticleCard.jsx ← Displays article preview
-│   ├── CommentCard.jsx ← Renders a comment
-│   ├── LoginForm.jsx ← Login UI
-│   ├── RegisterForm.jsx ← Register UI
-│   └── ...others
-├── store/           ← Zustand or global store setup
-├── styles/          ← CSS / global styling
-├── App.jsx          ← App routes and layout
-├── main.jsx         ← React DOM render + context providers
-└── index.css        ← Global CSS
+├── assets/          → Images and icons
+├── components/      → Reusable UI components
+├── store/           → Zustand store
+├── styles/          → Styling files
+├── App.jsx          → Routing and layout
+├── main.jsx         → React DOM render
+└── index.css        → Global styles
 ```
 
-*(Adjust names based on your actual component files.)*
+Important components:
+
+* Navbar
+* Footer
+* ArticleCard
+* CommentCard
+* Login
+* Register
+* UserProfile
+* AuthorProfile
+* ArticleByID
 
 ---
 
 ## 🔗 API Interaction
 
-The frontend communicates with the backend APIs (from your backend server):
+All API calls are made using **Axios** with credentials:
 
-* **Login** — `/common/login`
-* **Logout** — `/common/logout`
-* **Register (User/Author)** — `/user/users`, `/author/users`
-* **Fetch all articles** — `/user/articles`
-* **Fetch own author articles** — `/author/articles/:id`
-* **Create / Edit / Comment** → appropriate protected endpoints
+```js
+axios.get(`${import.meta.env.VITE_API_BASE_URL}/user/articles`, {
+  withCredentials: true,
+});
+```
 
-👉 These calls are typically made through **axios** or **fetch** inside service/helper functions.
+Endpoints used:
+
+* `/common/login`
+* `/common/logout`
+* `/user/users`
+* `/author/users`
+* `/user/articles`
+* `/author/articles/:id`
+
+---
+
+## 🔔 Toast Notifications
+
+Using `react-hot-toast`:
+
+Install:
+
+```bash
+npm install react-hot-toast
+```
+
+Add in `App.jsx`:
+
+```jsx
+<Toaster position="top-center" reverseOrder={false} />
+```
+
+Use:
+
+```js
+toast.success("Account created successfully");
+```
+
+---
+
+## 🖼️ UI Behavior
+
+### UserProfile
+
+* Displays all active articles in grid
+
+  * 1 card: extra small
+  * 2 cards: small
+  * 3 cards: medium
+  * 4 cards: large+
+
+### AuthorProfile
+
+* Displays only author's articles in same grid layout
+
+### ArticleByID
+
+* Displays article title, category, content
+* Shows author info and timestamps in IST format
 
 ---
 
 ## 🤝 Contributing
 
-Contributions are welcome!
-
 1. Fork the repo
-2. Create your branch (`git checkout -b feature/my-ui-feature`)
-3. Commit your changes
-4. Push (`git push origin feature/my-ui-feature`)
-5. Create a Pull Request
+2. Create a branch
+3. Commit changes
+4. Push and create PR
 
 ---
 
-
-### Using Toast in React app
-
-    - npm install react-hot-toast
-    - Add Toaser component at Root
-        <Toaster position="top-center" reverseOrder={false} /> in App.jsx
-
-    - Use toast with custom messages
-        Eg:
-            import toast from "react-hot-toast";
-
-            if (resObj.status === 201) {
-                toast.success("Account created successfully");
-                navigate("/login");
-            }
-
-### From UserProfile component,
-
-    - Read articles of all AUthors
-    - Display them in the form of Grid of cards
-                1 card for extra  small
-                2 cards for small
-                3 cards for medium
-                4 cards from large screen onwards
-
-### From AuthorProfile component,
-
-    - Read articles of his own
-    - Display them in the form of Grid of cards
-                1 card for extra  small
-                2 cards for small
-                3 cards for medium
-                4 cards from large screen onwards
-
-### When User /Author click on specific article from Articles list
-
-    - Navigate to "ArticleByID" component along with selected article
-    - Display the  article title, category, content along with author title & time stamps in IST format
-
-
 ## 📄 License
-    MIT
+
+MIT
+
+
+
+
+
+
