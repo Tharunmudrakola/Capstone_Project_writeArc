@@ -41,6 +41,12 @@ This React app serves as the **user interface** for the blogging platform.
 
 ---
 
+## 🌐 Deployed Link
+
+    https://blogapp-write-arc.vercel.app/
+
+---
+
 ## 📁 Folder Structure
 
 ```
