@@ -49,6 +49,181 @@ The backend handles all server-side logic and database interactions for the Writ
 - Multer + Cloudinary (image upload)  
 - dotenv  
 
+Great addition. Below is a **Backend README section** you can paste into `backend/README.md`.
+It includes **packages**, **install commands**, and **exact schemas** used in your project.
+
+---
+
+# ⚙️ BlogApp WriteArc — Backend (Node + Express + MongoDB)
+
+This is the backend server for **BlogApp – WriteArc**. It provides REST APIs for authentication, articles, comments, and role-based access for **USER**, **AUTHOR**, and **ADMIN**.
+
+---
+
+## 🛠️ Tech Stack
+
+* Node.js
+* Express.js
+* MongoDB + Mongoose
+* JWT Authentication (httpOnly cookies)
+* Multer (memory storage)
+* Cloudinary (image hosting)
+* CORS
+* dotenv
+
+---
+
+## 📦 Packages Installed
+
+Run these inside `backend/`:
+
+```
+npm init -y
+
+npm install express mongoose jsonwebtoken bcryptjs cors dotenv multer cloudinary cookie-parser
+
+npm install --save-dev nodemon
+```
+
+### What each package does
+
+| Package       | Purpose               |
+| ------------- | --------------------- |
+| express       | Server & routing      |
+| mongoose      | MongoDB ODM           |
+| jsonwebtoken  | JWT auth              |
+| bcryptjs      | Password hashing      |
+| cors          | Cross-origin requests |
+| dotenv        | Environment variables |
+| multer        | Image upload (memory) |
+| cloudinary    | Image hosting         |
+| cookie-parser | Read httpOnly cookies |
+| nodemon       | Dev auto-restart      |
+
+---
+
+## 🔐 Environment Variables
+
+Create `.env` in `backend/`:
+
+```
+PORT=5000
+MONGO_URI=your_mongodb_atlas_uri
+JWT_SECRET=your_secret
+CLOUDINARY_CLOUD_NAME=xxxx
+CLOUDINARY_API_KEY=xxxx
+CLOUDINARY_API_SECRET=xxxx
+```
+
+---
+
+## 🧩 Mongoose Schemas
+
+### 👤 User Schema
+
+```
+import { Schema, model } from "mongoose";
+
+const userSchema = new Schema(
+  {
+    firstName: { type: String, required: [true, "First name is required"] },
+    lastName: { type: String },
+    email: {
+      type: String,
+      required: [true, "Email is required"],
+      unique: [true, "Email already existed"],
+    },
+    password: { type: String, required: [true, "Password is required"] },
+    profileImageUrl: { type: String },
+    role: {
+      type: String,
+      enum: ["AUTHOR", "USER", "ADMIN"],
+      required: [true, "{Value} is an invalid role"],
+    },
+    isActive: { type: Boolean, default: true },
+  },
+  { timestamps: true, strict: "throw", versionKey: false }
+);
+
+export const UserTypeModel = model("user", userSchema);
+```
+
+---
+
+### 📝 Article Schema 
+
+```
+import { Schema, model } from "mongoose";
+
+// Comment sub-schema
+const userCommentSchema = new Schema({
+  user: { type: Schema.Types.ObjectId, ref: "user" },
+  comment: { type: String },
+});
+
+// Article schema
+const articleSchema = new Schema(
+  {
+    author: {
+      type: Schema.Types.ObjectId,
+      ref: "user",
+      required: [true, "Author ID required"],
+    },
+    title: { type: String, required: [true, "Title is required"] },
+    category: { type: String, required: [true, "Category is required"] },
+    content: { type: String, required: [true, "Content is required"] },
+    comments: [userCommentSchema],
+    isArticleActive: { type: Boolean, default: true },
+  },
+  { timestamps: true, strict: "throw", versionKey: false }
+);
+
+export const ArticleModel = model("article", articleSchema);
+```
+
+---
+
+## 🌐 API Route Groups
+
+| Base Route | Purpose                                   |
+| ---------- | ----------------------------------------- |
+| `/common`  | Login, logout, auth check                 |
+| `/user`    | User registration, view articles, comment |
+| `/author`  | Author registration, create/edit articles |
+
+---
+
+## ▶️ Run Server
+
+```bash
+nodemon server.js
+# or
+node server.js
+```
+
+Server runs at: `http://localhost:5000`
+
+---
+
+## 🔐 Core Concepts Implemented
+
+* JWT in httpOnly cookies
+* Role-based middleware (USER / AUTHOR / ADMIN)
+* Soft delete using `isArticleActive`
+* Embedded comment schema
+* Strict schema validation
+* Image upload → Multer → Cloudinary
+
+---
+
+## 🧪 Sample Flow
+
+1. Register as USER / AUTHOR
+2. Login → cookie stored
+3. AUTHOR creates article
+4. USER reads & comments
+5. AUTHOR soft deletes / restores article
+
 ---
 
 ## 📁 Directory Structure
