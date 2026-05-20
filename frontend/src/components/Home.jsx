@@ -1,4 +1,5 @@
 import { Link } from "react-router";
+import toast from "react-hot-toast";
 
 function Home() {
   return (

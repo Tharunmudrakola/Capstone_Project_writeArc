@@ -1,4 +1,5 @@
 import { useRouteError } from "react-router";
+import toast from "react-hot-toast";
 
 function ErrorBoundary() {
   const { data, status, statusText } = useRouteError();

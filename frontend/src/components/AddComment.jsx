@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useAuth } from "../store/authStore";
 import { secondaryBtn, inputClass } from "../styles/common.js";
+import toast from "react-hot-toast";
 
 function AddComment({ articleId, onCommentAdded }) {
   const [comment, setComment] = useState("");

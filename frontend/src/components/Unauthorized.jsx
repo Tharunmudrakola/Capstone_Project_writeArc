@@ -25,6 +25,7 @@
 
 import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router";
+import toast from "react-hot-toast";
 
 const Unauthorized = ({ delay = 5000 }) => {
   console.log("unauthorized");

@@ -1,6 +1,6 @@
 import { useAuth } from "../store/authStore";
 import { Navigate } from "react-router";
-
+import toast from "react-hot-toast";
 function ProtectedRoute({ children, allowedRoles }) {
   //get user login status from store
   const { loading, currentUser, isAuthenticated, logout } = useAuth();

@@ -3,6 +3,7 @@ import Footer from "./Footer";
 import { Outlet } from "react-router";
 import { useEffect } from "react";
 import { useAuth } from "../store/authStore";
+import toast from "react-hot-toast";
 
 function RootLayout() {
   const checkAuth = useAuth((state) => state.checkAuth);

@@ -1,5 +1,6 @@
 import { NavLink, useNavigate } from "react-router";
 import { useAuth } from "../store/authStore";
+import toast from "react-hot-toast";
 import {
   navbarClass,
   navContainerClass,

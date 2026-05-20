@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import { useAuth } from "../store/authStore";
-
+import toast from "react-hot-toast";
 import {
   articleCardClass,
   articleTitle,

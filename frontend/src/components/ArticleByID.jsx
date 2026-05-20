@@ -2,8 +2,7 @@ import { useParams, useLocation, useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../store/authStore";
-import { toast } from "react-hot-toast";
-
+import toast from "react-hot-toast";
 import {
   articlePageWrapper,
   articleHeader,
