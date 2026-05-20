@@ -21,7 +21,7 @@ app.use(
   })
 );
 //add body parser middleware
-app.use(exp.json());
+app.use(express.json());
 //add cookie parser middleware
 app.use(cookieParser());
 
