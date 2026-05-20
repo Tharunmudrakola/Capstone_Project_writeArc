@@ -11,15 +11,15 @@ import cors from "cors";
 config(); //process.env
 
 //Create express application
-const app = exp();
-//use cors middleware
+const cors = require("cors");
+
 app.use(
   cors({
     origin: [
-  "http://localhost:5174",
-  "https://capstoneprojectw-tharunmudrakolas-projects.vercel.app",
-  "https://capstoneprojectw.vercel.app",
-],
+      "http://localhost:5174",
+      "https://capstoneprojectw.vercel.app",
+      "https://capstoneprojectw-tharunmudrakolas-projects.vercel.app",
+    ],
     credentials: true,
   })
 );
