@@ -17,7 +17,6 @@ import { NavLink } from "react-router";
 import { useAuth } from "../store/authStore";
 import { useEffect } from "react";
 import { useNavigate,useLocation } from "react-router";
-import { toast } from "react-hot-toast";
 
 function Login() {
   const { register, handleSubmit } = useForm();
