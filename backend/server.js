@@ -13,7 +13,15 @@ config(); //process.env
 //Create express application
 const app = exp();
 //use cors middleware
-app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5174",
+      "https://capstoneprojectw-tharunmudrakolas-projects.vercel.app",
+    ],
+    credentials: true,
+  })
+);
 //add body parser middleware
 app.use(exp.json());
 //add cookie parser middleware
