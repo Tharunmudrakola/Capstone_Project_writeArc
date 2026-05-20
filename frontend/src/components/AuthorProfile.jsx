@@ -1,7 +1,7 @@
 import { NavLink, Outlet, useNavigate } from "react-router";
 import { pageWrapper, navLinksClass, navLinkClass, navLinkActiveClass, divider, ghostBtn } from "../styles/common";
 import { useAuth } from "../store/authStore";
-
+import { toast } from "react-toastify";
 function AuthorProfile() {
   const logout = useAuth((state) => state.logout);
   const currentUser = useAuth((state) => state.currentUser);

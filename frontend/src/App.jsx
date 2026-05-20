@@ -14,6 +14,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Unauthorized from "./components/Unauthorized";
 import ErrorBoundary from "./components/ErrorBoundary";
 import ChangePassword from "./components/ChangePassword";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const routerObj = createBrowserRouter([
