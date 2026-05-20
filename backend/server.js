@@ -11,7 +11,6 @@ import cors from "cors";
 config(); //process.env
 
 //Create express application
-const cors = require("cors");
 
 app.use(
   cors({
