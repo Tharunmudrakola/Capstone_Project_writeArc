@@ -98,7 +98,7 @@ blogapp-WriteArc
 ### 1️⃣ Clone Repository
 
 ```bash
-git clone https://github.com/ritesh-mogilamoni/blogapp-WriteArc.git
+git clone https://github.com/Tharunmudrakola/Capstone_Project_writeArc.git
 cd blogapp-WriteArc
 ```
 
